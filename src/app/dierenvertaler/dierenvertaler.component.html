@@ -1,0 +1,49 @@
+<div class="translator-container">
+    <mat-card>
+        <mat-card-title>Dierenvertaler</mat-card-title>
+
+        <mat-card-content class="cardContent">
+            <form [formGroup]="translateForm" (ngSubmit)="onSubmit(translateForm.value)">
+                <mat-form-field appearance="fill">
+                    <mat-label>Tekst om te vertalen</mat-label>
+                    <textarea matInput id="inputText" formControlName="inputText" required></textarea>
+                    <mat-error>
+                        Voer een tekst in.
+                    </mat-error>
+                    <mat-hint class="mat-error" *ngIf="!textIsValid && (inputText?.dirty || inputText?.touched)">
+                        Input komt niet overeen met geselecteerde taal.
+                    </mat-hint>
+                </mat-form-field>
+
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Van</mat-label>
+                        <mat-select id="sourceLanguage" formControlName="sourceLanguage" required>
+                            <mat-option *ngFor="let language of sourceLanguages" [value]="language">
+                                {{language.displayName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Naar</mat-label>
+                        <mat-select id="outputLanguage" formControlName="outputLanguage" required>
+                            <mat-option *ngFor="let language of targetLanguages" [value]="language">
+                                {{language.displayName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="submit-button-container">
+                        <button class="submitButton" mat-raised-button color="primary" type="submit">Vertalen</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="output-field">
+                {{output}}
+                <span *ngIf="!output">
+                    Vertaling
+                </span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
